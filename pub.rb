@@ -18,9 +18,14 @@ class Pub
   end
 
   def sell_drink(customer, drink)
-    customer.make_payment(drink.show_price)
-    receive_payment(drink.show_price)
+    if check_customer_age(customer)
+      customer.make_payment(drink.show_price)
+      receive_payment(drink.show_price)
+      customer.increase_drunkenness_level(drink)
+    else
+      return "Sorry, we can't sell drinks to under 18s."
   end
+end
 
   def check_customer_age(customer)
     return true if customer.show_age >= 18

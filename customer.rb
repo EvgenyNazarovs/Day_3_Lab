@@ -1,9 +1,12 @@
 class Customer
 
+  attr_reader :drunkenness_level
+
   def initialize(name, wallet, age)
     @name = name
     @wallet = wallet
     @age = age
+    @drunkenness_level = 0
   end
 
   def show_name
@@ -22,6 +25,16 @@ class Customer
     @age
   end
 
+  def increase_drunkenness_level(drink)
+    if drink.alcohol_level <= 10
+      @drunkenness_level += 1
+    elsif (drink.alcohol_level > 10 && drink.alcohol_level < 30)
+      @drunkenness_level = @drunkenness_level + 2
+    else
+      @drunkenness_level = @drunkenness_level + 4
+    end
+  end
 
+#linter-ruby
 
 end

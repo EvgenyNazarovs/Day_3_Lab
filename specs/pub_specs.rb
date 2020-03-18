@@ -10,12 +10,13 @@ class PubTest < MiniTest::Test
 
   def setup
     @george = Customer.new("George", 100.0, 27)
+    @steve = Customer.new("Steve", 70, 14)
 
-    @vodka = Drink.new("Vodka", 4.0)
-    @gin = Drink.new("Gin", 3.5)
-    @ipa = Drink.new("IPA", 5.0)
-    @pinot_grigio = Drink.new("Pinot Grigio", 10.0)
-    @house_wine = Drink.new("House Wine", 6.0)
+    @vodka = Drink.new("Vodka", 4.0, 40)
+    @gin = Drink.new("Gin", 3.5, 39)
+    @ipa = Drink.new("IPA", 5.0, 6)
+    @pinot_grigio = Drink.new("Pinot Grigio", 10.0, 15.5)
+    @house_wine = Drink.new("House Wine", 6.0, 13)
 
     @drinks = [@vodka, @gin, @ipa, @pinot_grigio, @house_wine]
 
@@ -48,6 +49,15 @@ class PubTest < MiniTest::Test
 
   def test_checking_customer_age
     assert_equal(true, @stereo.check_customer_age(@george))
+  end
+
+  def test_refuse_to_sell_customer_drink_because_of_age
+    assert_equal("Sorry, we can't sell drinks to under 18s.", @stereo.sell_drink(@steve, @gin))
+  end
+
+  def test_customer_drunkenness_goes_up_after_buying_drink
+    @stereo.sell_drink(@george, @vodka)
+    assert_equal(4, @george.drunkenness_level)
   end
 
 end

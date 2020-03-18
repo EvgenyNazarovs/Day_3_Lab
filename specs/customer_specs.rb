@@ -29,4 +29,11 @@ class CustomerTest < MiniTest::Test
     assert_equal(18, andrew.show_age)
   end
 
+  def test_customer_drunkennes_level
+    alex = Customer.new("Alex", 300, 25)
+    white_wine = Drink.new("white wine", 8.0, 15.5)
+    alex.increase_drunkenness_level(white_wine)
+    assert_equal(2, alex.drunkenness_level)
+  end
+
 end
