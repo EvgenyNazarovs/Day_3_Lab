@@ -3,10 +3,11 @@ class Pub
   attr_reader :name
   attr_accessor :drinks
 
-  def initialize(name, till, drinks)
+  def initialize(name, till, drinks, food)
     @name = name
     @till = till
     @drinks = drinks
+    @food = food
   end
 
   def till_count
@@ -44,5 +45,19 @@ end
   def check_customer_age(customer)
     return true if customer.show_age >= 18
   end
+
+  def sell_food(customer, food)
+      customer.make_payment(food.price)
+      receive_payment(food.price)
+      customer.decrease_drunkenness_level(food)
+end
+
+def stock_value(drinks)
+  total_value = 0
+  drinks.each do |key, value|
+    total_value += value[:quantity]
+  end
+  return total_value
+end
 
 end

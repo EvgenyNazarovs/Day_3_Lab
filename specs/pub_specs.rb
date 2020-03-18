@@ -5,6 +5,7 @@ Minitest::Reporters.use! Minitest::Reporters::SpecReporter.new
 require_relative('../pub')
 require_relative('../drink')
 require_relative('../customer')
+require_relative('../food/')
 
 class PubTest < MiniTest::Test
 
@@ -18,9 +19,21 @@ class PubTest < MiniTest::Test
     @pinot_grigio = Drink.new("Pinot Grigio", 10.0, 15.5)
     @house_wine = Drink.new("House Wine", 6.0, 13)
 
-    @drinks = [@vodka, @gin, @ipa, @pinot_grigio, @house_wine]
+    @fish_and_chips = Food.new("Fish and Chips", 7.5, 3)
+    @cheeseburger = Food.new("Cheeseburger", 6.0, 4)
 
-    @stereo = Pub.new("Stereo", 500, @drinks)
+    @stock = [@drinks, @stock]
+
+    @drinks = {@vodka =>        {quantity: 10},
+               @gin =>          {quantity: 50},
+               @ipa =>          {quantity: 100},
+               @pinot_grigio => {quantity: 15},
+               @house_wine =>   {quantity: 20}
+             }
+
+    @food = [@fish_and_chips, @cheeseburger]
+
+    @stereo = Pub.new("Stereo", 500, @drinks, @food)
 
   end
 
@@ -70,17 +83,25 @@ class PubTest < MiniTest::Test
     assert_equal("Sorry, you have had too much alcohol for the night.", @stereo.sell_drink(@george, @vodka))
   end
 
+  def test_sell_food
+    @stereo.sell_food(@george, @fish_and_chips)
+    assert_equal(507.5, @stereo.till_count)
+  end
+
+  def test_stock_value
+    assert_equal(195, @stereo.stock_value(@drinks))
+  end
+
 end
 
 
 
 
-# Extensions:
-#
-# Add an age to the Customer. Make sure the Pub checks the
-# age before serving the Customer.
-
-# Add alcohol_level to the Drink, and a drunkenness level
-# to the Customer. Every time a Customer buys a drink,
-# the drunkenness level should go up by the alcohol_level.
-# Pub should refuse service above a certain level of drunkenness!
+# Create a Food class, that has a name, price and rejuvenation_level.
+# Each time a Customer buys Food, their drunkenness should
+# go down by the rejuvenation_level
+# Pub can have a stock (maybe a Hash?) to keep track the amount of
+# drinks available (Hard! Might need to change the drinks array to a
+#   drinks hash)
+# Pub can have a stock_value method to check the total value of
+# its drinks

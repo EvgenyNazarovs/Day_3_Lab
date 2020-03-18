@@ -35,6 +35,10 @@ class Customer
     end
   end
 
+  def decrease_drunkenness_level(food)
+    @drunkenness_level = @drunkenness_level - food.rejuvenation_level
+  end
+
 #linter-ruby
 
 end
