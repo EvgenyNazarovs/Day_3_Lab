@@ -42,10 +42,6 @@ end
   end
 end
 
-  def check_customer_age(customer)
-    return true if customer.show_age >= 18
-  end
-
   def sell_food(customer, food)
       customer.make_payment(food.price)
       receive_payment(food.price)
@@ -60,4 +56,11 @@ def stock_value(drinks)
   return total_value
 end
 
+def check_customer_money(customer, item)
+  if customer.check_money >= item.price
+    return true
+  else
+    return false
+  end
+end
 end

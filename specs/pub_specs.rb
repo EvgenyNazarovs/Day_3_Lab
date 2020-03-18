@@ -92,6 +92,10 @@ class PubTest < MiniTest::Test
     assert_equal(195, @stereo.stock_value(@drinks))
   end
 
+  def test_check_customer_has_enough_money
+    assert_equal(true, @stereo.check_customer_money(@george, @cheeseburger))
+  end
+
 end
 
 
