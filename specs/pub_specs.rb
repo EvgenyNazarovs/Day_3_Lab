@@ -60,6 +60,16 @@ class PubTest < MiniTest::Test
     assert_equal(4, @george.drunkenness_level)
   end
 
+  def test_check_that_customer_can_cotinue_drinking
+    @george.drunkenness_level = 25
+    assert_equal(false, @stereo.check_customer_drunkenness(@george))
+  end
+
+  def test_refuse_to_sell_drink_because_of_drunkenness
+    @george.drunkenness_level = 30
+    assert_equal("Sorry, you have had too much alcohol for the night.", @stereo.sell_drink(@george, @vodka))
+  end
+
 end
 
 

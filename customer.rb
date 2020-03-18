@@ -1,6 +1,6 @@
 class Customer
 
-  attr_reader :drunkenness_level
+  attr_accessor :drunkenness_level
 
   def initialize(name, wallet, age)
     @name = name
